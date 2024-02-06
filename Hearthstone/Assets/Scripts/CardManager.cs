@@ -7,6 +7,7 @@ public class CardManager : MonoBehaviour {
     void Awake() => Inst = this;
 
     [SerializeField] ItemSO itemSO;
+    [SerializeField] GameObject cardPrefab; // 새로 추가
 
     List<Item> itemBuffer;
 
@@ -43,7 +44,14 @@ public class CardManager : MonoBehaviour {
 
     void Update() {
         if(Input.GetKeyDown(KeyCode.Keypad1)) { // 만약 1번 키를 누르면
-            print(PopItem().name);
+            // print(PopItem().name);
+            Addcard(true); // Test를 위한 호출
         }
+    }
+
+    void Addcard(bool isMine) {
+        var cardObject = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity);
+        var card = cardObject.GetComponent<Card>();
+        card.Setup(PopItem(), isMine);
     }
 }
