@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,9 @@ public class CardManager : MonoBehaviour {
     void Awake() => Inst = this;
 
     [SerializeField] ItemSO itemSO;
-    [SerializeField] GameObject cardPrefab; // 새로 추가
+    [SerializeField] GameObject cardPrefab; 
+    [SerializeField] List<Card> myCards; // 새로 추가
+    [SerializeField] List<Card> otherCards; // 새로 추가
 
     List<Item> itemBuffer;
 
@@ -44,8 +47,10 @@ public class CardManager : MonoBehaviour {
 
     void Update() {
         if(Input.GetKeyDown(KeyCode.Keypad1)) { // 만약 1번 키를 누르면
-            // print(PopItem().name);
-            Addcard(true); // Test를 위한 호출
+            Addcard(true); // Test를 위한 호출. 내 카드가 생성
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2)) { // 만약 2번 키를 누르면
+            Addcard(false); // Test를 위한 호출. 상대 카드가 생성
         }
     }
 
@@ -53,5 +58,16 @@ public class CardManager : MonoBehaviour {
         var cardObject = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity);
         var card = cardObject.GetComponent<Card>();
         card.Setup(PopItem(), isMine);
+        (isMine ? myCards : otherCards).Add(card); // 새로추가. 만약 내 카드라면 myCards에 Add 아니라면 otherCards에 Add
+
+        SetOriginOrder(isMine);
+    }
+
+    void SetOriginOrder(bool isMine) {
+        int count = isMine ? myCards.Count : otherCards.Count;
+        for(int i = 0; i < count; i++) {
+            var targetCard = isMine ? myCards[i] : otherCards[i];
+            targetCard?.GetComponent<Order>().SetOriginOrder(i); // targetCard가 존재 한다면 Order의 SetOriginOrder를 이용해 Order를 설정한다.
+        }
     }
 }
