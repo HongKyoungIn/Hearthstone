@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Order : MonoBehaviour {
     [SerializeField]
-    Renderer[] backRenderers; // µÚÂÊ¿¡ ÀÖ´Â Renderer
+    Renderer[] backRenderers; // ë’¤ìª½ì— ìˆëŠ” Renderer
 
     [SerializeField]
-    Renderer[] middelRenderers; // Áß¾Ó¿¡ ÀÖ´Â Renderer
+    Renderer[] middelRenderers; // ì¤‘ì•™ì— ìˆëŠ” Renderer
 
     [SerializeField]
-    string sortingLayerName; // SortingLayer ÀÌ¸§À» ÁöÁ¤
+    string sortingLayerName; // SortingLayer ì´ë¦„ì„ ì§€ì •
 
     int originOrder;
 

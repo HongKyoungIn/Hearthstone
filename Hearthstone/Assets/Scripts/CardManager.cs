@@ -4,36 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour {
-    public static CardManager Inst { get; private set; } // ¸Å´ÏÀú´Â ÇÏ³ª¸¸ Á¸ÀçÇÏ±â ¶§¹®¿¡ ½Ì±ÛÅæÀ¸·Î ¼±¾ğ.
+    public static CardManager Inst { get; private set; } // ë§¤ë‹ˆì €ëŠ” í•˜ë‚˜ë§Œ ì¡´ì¬í•˜ê¸° ë•Œë¬¸ì— ì‹±ê¸€í†¤ìœ¼ë¡œ ì„ ì–¸.
     void Awake() => Inst = this;
 
     [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab; 
-    [SerializeField] List<Card> myCards; // »õ·Î Ãß°¡
-    [SerializeField] List<Card> otherCards; // »õ·Î Ãß°¡
+    [SerializeField] List<Card> myCards; // ìƒˆë¡œ ì¶”ê°€
+    [SerializeField] List<Card> otherCards; // ìƒˆë¡œ ì¶”ê°€
 
     List<Item> itemBuffer;
 
     public Item PopItem() {
-        if (itemBuffer.Count == 0) { // ¸¸¾à Ä«µå¸¦ ´Ù »Ì¾Æ ¹öÆÛ°¡ °¡Áö°í ÀÖ´Â Ä«µåÀÇ °¹¼ö°¡ 0°³°¡ µÇ¸é
-            SetupItemBuffer(); // ´Ù½Ã »õ·Î ¹öÆÛ¿¡ 100ÀåÀÇ Ä«µå¸¦ ¼ÂÆÃ
+        if (itemBuffer.Count == 0) { // ë§Œì•½ ì¹´ë“œë¥¼ ë‹¤ ë½‘ì•„ ë²„í¼ê°€ ê°€ì§€ê³  ìˆëŠ” ì¹´ë“œì˜ ê°¯ìˆ˜ê°€ 0ê°œê°€ ë˜ë©´
+            SetupItemBuffer(); // ë‹¤ì‹œ ìƒˆë¡œ ë²„í¼ì— 100ì¥ì˜ ì¹´ë“œë¥¼ ì…‹íŒ…
         }
 
-        Item item = itemBuffer[0]; // ¹öÆÛ ¸Ç ¾Õ¿¡ ÀÖ´Â Ä«µå¸¦ »Ì´Â´Ù.
-        itemBuffer.RemoveAt(0); // »ÌÀº Ä«µå¸¦ ¹öÆÛ¿¡¼­ Áö¿î´Ù.
-        return item; // Ä«µå¸¦ »Ì¾Æ³½´Ù.
+        Item item = itemBuffer[0]; // ë²„í¼ ë§¨ ì•ì— ìˆëŠ” ì¹´ë“œë¥¼ ë½‘ëŠ”ë‹¤.
+        itemBuffer.RemoveAt(0); // ë½‘ì€ ì¹´ë“œë¥¼ ë²„í¼ì—ì„œ ì§€ìš´ë‹¤.
+        return item; // ì¹´ë“œë¥¼ ë½‘ì•„ë‚¸ë‹¤.
     }
 
     void SetupItemBuffer() {
         itemBuffer = new List<Item>();
-        for(int i = 0; i < itemSO.items.Length; i++) { // item ¹è¿­¿¡ ´ã°ÜÀÖ´Â 10°³ÀÇ Ä«µå
-            Item item = itemSO.items[i]; // 10°³ÀÇ Ä«µå¸¦ °¡Á®¿Â´Ù.
-            for(int j = 0; j < item.percent; j++) { // °¢°¢ÀÇ Ä«µå¸¸Å­ÀÇ ÆÛ¼¾Æ® ¸¸Å­ ¹İº¹½ÃÅ²´Ù
-                itemBuffer.Add(item); // ÃÑ 100ÀåÀÇ Ä«µå°¡ µé¾î°¡¸ç °¢°¡ÀÇ Ä«µå °¹¼ö´Â °¢ Ä«µåÀÇ ÆÛ¼¾Æ®¸¸Å­ µé¾î°£´Ù.
+        for(int i = 0; i < itemSO.items.Length; i++) { // item ë°°ì—´ì— ë‹´ê²¨ìˆëŠ” 10ê°œì˜ ì¹´ë“œ
+            Item item = itemSO.items[i]; // 10ê°œì˜ ì¹´ë“œë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+            for(int j = 0; j < item.percent; j++) { // ê°ê°ì˜ ì¹´ë“œë§Œí¼ì˜ í¼ì„¼íŠ¸ ë§Œí¼ ë°˜ë³µì‹œí‚¨ë‹¤
+                itemBuffer.Add(item); // ì´ 100ì¥ì˜ ì¹´ë“œê°€ ë“¤ì–´ê°€ë©° ê°ê°€ì˜ ì¹´ë“œ ê°¯ìˆ˜ëŠ” ê° ì¹´ë“œì˜ í¼ì„¼íŠ¸ë§Œí¼ ë“¤ì–´ê°„ë‹¤.
             }
         }
 
-        for(int i = 0; i < itemBuffer.Count; i++) { // ¼ø¼­´ë·Î µé¾î°¡ÀÖ´Â Ä«µå¸¦ ·£´ıÇÏ°Ô ¼¯¾îÁØ´Ù.
+        for(int i = 0; i < itemBuffer.Count; i++) { // ìˆœì„œëŒ€ë¡œ ë“¤ì–´ê°€ìˆëŠ” ì¹´ë“œë¥¼ ëœë¤í•˜ê²Œ ì„ì–´ì¤€ë‹¤.
             int rand = Random.Range(i, itemBuffer.Count);
             Item temp = itemBuffer[i];
             itemBuffer[i] = itemBuffer[rand];
@@ -46,11 +46,11 @@ public class CardManager : MonoBehaviour {
     }
 
     void Update() {
-        if(Input.GetKeyDown(KeyCode.Keypad1)) { // ¸¸¾à 1¹ø Å°¸¦ ´©¸£¸é
-            Addcard(true); // Test¸¦ À§ÇÑ È£Ãâ. ³» Ä«µå°¡ »ı¼º
+        if(Input.GetKeyDown(KeyCode.Keypad1)) { // ë§Œì•½ 1ë²ˆ í‚¤ë¥¼ ëˆ„ë¥´ë©´
+            Addcard(true); // Testë¥¼ ìœ„í•œ í˜¸ì¶œ. ë‚´ ì¹´ë“œê°€ ìƒì„±
         }
-        if (Input.GetKeyDown(KeyCode.Keypad2)) { // ¸¸¾à 2¹ø Å°¸¦ ´©¸£¸é
-            Addcard(false); // Test¸¦ À§ÇÑ È£Ãâ. »ó´ë Ä«µå°¡ »ı¼º
+        if (Input.GetKeyDown(KeyCode.Keypad2)) { // ë§Œì•½ 2ë²ˆ í‚¤ë¥¼ ëˆ„ë¥´ë©´
+            Addcard(false); // Testë¥¼ ìœ„í•œ í˜¸ì¶œ. ìƒëŒ€ ì¹´ë“œê°€ ìƒì„±
         }
     }
 
@@ -58,7 +58,7 @@ public class CardManager : MonoBehaviour {
         var cardObject = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity);
         var card = cardObject.GetComponent<Card>();
         card.Setup(PopItem(), isMine);
-        (isMine ? myCards : otherCards).Add(card); // »õ·ÎÃß°¡. ¸¸¾à ³» Ä«µå¶ó¸é myCards¿¡ Add ¾Æ´Ï¶ó¸é otherCards¿¡ Add
+        (isMine ? myCards : otherCards).Add(card); // ìƒˆë¡œì¶”ê°€. ë§Œì•½ ë‚´ ì¹´ë“œë¼ë©´ myCardsì— Add ì•„ë‹ˆë¼ë©´ otherCardsì— Add
 
         SetOriginOrder(isMine);
     }
@@ -67,7 +67,7 @@ public class CardManager : MonoBehaviour {
         int count = isMine ? myCards.Count : otherCards.Count;
         for(int i = 0; i < count; i++) {
             var targetCard = isMine ? myCards[i] : otherCards[i];
-            targetCard?.GetComponent<Order>().SetOriginOrder(i); // targetCard°¡ Á¸Àç ÇÑ´Ù¸é OrderÀÇ SetOriginOrder¸¦ ÀÌ¿ëÇØ Order¸¦ ¼³Á¤ÇÑ´Ù.
+            targetCard?.GetComponent<Order>().SetOriginOrder(i); // targetCardê°€ ì¡´ì¬ í•œë‹¤ë©´ Orderì˜ SetOriginOrderë¥¼ ì´ìš©í•´ Orderë¥¼ ì„¤ì •í•œë‹¤.
         }
     }
 }
